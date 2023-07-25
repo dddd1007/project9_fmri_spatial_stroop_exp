@@ -1,0 +1,5 @@
+stim_image_loc,corr_resp,congruency
+material/top-shang.png,1,con
+material/bottom-xia.png,4,con
+material/bottom-shang.png,1,inc
+material/top-xia.png,4,inc

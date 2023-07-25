@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File “/Applications/PsychoPy.app/Contents/Resources/lib/python3.8/psychopy/app/builder/builder.py”, line 743, in fileSave
+  File “/Applications/PsychoPy.app/Contents/Resources/lib/python3.8/psychopy/experiment/_experiment.py”, line 388, in saveToXML
+  File “codecs.pyc”, line 905, in open
+FileNotFoundError: [Errno 2] No such file or directory: ‘/Users/dddd1007/Library/CloudStorage/Dropbox/工作/博士工作/实验数据与程序/project9_fmri_spatial_stroop/program/上右下左/PC_spatial_stroop.psyexp’

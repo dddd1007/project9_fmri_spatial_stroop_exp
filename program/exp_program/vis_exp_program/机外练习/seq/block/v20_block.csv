@@ -1,0 +1,5 @@
+seqfile,short_rest_duration,stop_rest_duration,block,prop
+seq/trial/pc_20.csv,20,30,1,MI
+seq/trial/pc_80.csv,20,30,2,MC
+seq/trial/pc_20.csv,20,30,3,MI
+seq/trial/pc_80.csv,0,0,4,MC

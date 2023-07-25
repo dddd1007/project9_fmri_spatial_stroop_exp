@@ -1,0 +1,7 @@
+block_seq,long_rest_duration,stop_long_rest_duration,run,volatile
+seq/block/s20_part1.csv,60,300,1,s
+seq/block/s20_part2.csv,60,300,2,s
+seq/block/s20_part3.csv,60,300,3,s
+seq/block/v20_block.csv,60,300,4,v
+seq/block/v80_block.csv,60,300,5,v
+seq/block/v20_block.csv,0,0,6,v
