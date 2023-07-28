@@ -51,7 +51,7 @@ extract_data <- function(file) {
 #--- Import packages and file list
 library(here)
 library(writexl)
-file_list <- list.files("/Users/dddd1007/Research/project9_fmri_spatial_stroop/data/input/behavioral_data/single_sub_data",
+file_list <- list.files("/Volumes/Research/project9_fmri_spatial_stroop/data/input/behavioral_data/single_sub_data",
     pattern = ".*.csv", full.names = TRUE
 )
 
@@ -74,5 +74,5 @@ all_data <- bind_rows(all_data_list) %>%
     select(!stim_image_loc) %>%
     tidyr::separate(stim, c("stim_loc", "stim_text"), "-")
 
-write_xlsx(all_data, "/Users/dddd1007/Research/project9_fmri_spatial_stroop/data/input/behavioral_data/all_data.xlsx")
-write_csv(all_data, "/Users/dddd1007/Research/project9_fmri_spatial_stroop/data/input/behavioral_data/all_data.csv")
+write_xlsx(all_data, "/Volumes/Research/project9_fmri_spatial_stroop/data/input/behavioral_data/all_data.xlsx")
+write_csv(all_data, "/Volumes/Research/project9_fmri_spatial_stroop/data/input/behavioral_data/all_data.csv")

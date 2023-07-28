@@ -14,7 +14,7 @@ paramed_data %>%
     summarise(mean = mean(bl_sr_v))
 
 # Alpha in RL
-rl_params <- read.csv("/Users/dddd1007/Research/project9_fmri_spatial_stroop/data/output/model_estimation/reinforcement_learning/optim_para_sr_v.csv")
+rl_params <- read.csv("/Volumes/Research/project9_fmri_spatial_stroop/data/output/model_estimation/reinforcement_learning/optim_para_sr_v.csv")
 rl_params %>%
     summarise(alpha_s = mean(alpha_s), alpha_v = mean(alpha_v))
 
