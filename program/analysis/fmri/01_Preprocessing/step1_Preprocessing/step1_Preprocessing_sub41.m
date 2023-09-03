@@ -2,13 +2,13 @@ clear, clc
 global defaults; spm_get_defaults;
 %spm('Defaults','FMRI');
 
-homefolder = '/Volumes/Research 1/project9_fmri_spatial_stroop/data/input/fmri_data/new_nii/';
+homefolder = '/Volumes/Research/project9_fmri_spatial_stroop/data/input/fmri_data/new_nii/';
 datapath        = [homefolder filesep];  % Root-directory
 paths           = {'Orig'; 'Normalised'; 'Smooth_8mm'};
 runs            = {'session1','session2','session3','session4','session5','session6'};
 structurals     = {'3D'};
 
-subjects        = {'sub11'};
+subjects        = {'sub41'};
 
 deleteDummies = 3;
 doDICOM       = 0;
@@ -20,7 +20,7 @@ doWrite       = 1;
 doMove        = 1;
 doSmooth      = 1;
 
-disp(['Preprocessing subject 11 ...'])
+disp(['Preprocessing subject 41 ...'])
 sub = 1;
 
 if doDICOM

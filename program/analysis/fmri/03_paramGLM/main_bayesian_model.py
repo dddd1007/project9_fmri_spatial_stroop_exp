@@ -10,19 +10,16 @@ from joblib import Parallel, delayed
 from nipype.interfaces.spm import Level1Design, EstimateModel, EstimateContrast
 from nipype.algorithms.modelgen import SpecifySPMModel
 
-
+base_path = "/Users/dddd1007/Library/CloudStorage/Dropbox/Work/Research/project9_fmri_spatial_stroop/data/input"
 # 读取被试数据
-all_data = pd.read_csv(
-    "/Volumes/Research/project9_fmri_spatial_stroop/data/input/all_data_with_params.csv"
-)
+all_data = pd.read_csv(os.path.join(base_path, "all_data_with_params.csv"))
+
 # 被试基本信息
 session_num = 6
 
 # 数据位置
-root_dir = "/Volumes/Research/project9_fmri_spatial_stroop/data/input/fmri_data/new_nii"
-output_dir = (
-    "/Volumes/Research/project9_fmri_spatial_stroop/data/output/new_fmri/"
-)
+root_dir = "/Volumes/research/backup/project9_fmri_spatial_stroop/data/input/fmri_data/nii"
+output_dir = "/Users/dddd1007/Library/CloudStorage/Dropbox/Work/Research/project9_fmri_spatial_stroop/data/output/fmri_fix/"
 
 # %%
 # Set the basic params
@@ -83,7 +80,7 @@ def bl_processInput(sub_num):
         return None
 
 
-results = Parallel(n_jobs=2)(
+results = Parallel(n_jobs=3)(
     delayed(bl_processInput)(sub_num) for sub_num in inputs
 )
 
@@ -304,10 +301,10 @@ def generate_spm_conditions(matfile):
     return condition_names, single_run_conditions
 
 
-output_dir = "/Volumes/Research/project9_fmri_spatial_stroop/output/fmri/paramGLM/bl/1stLevel/sub41"
+output_dir = "/Users/dddd1007/Library/CloudStorage/Dropbox/Work/Research/project9_fmri_spatial_stroop/data/output/fmri/paramGLM/new_bl/1stLevel/sub41"
 Path(output_dir).mkdir(parents=True, exist_ok=True)
 os.chdir(output_dir)
-root_dir = "/Volumes/Research/project9_fmri_spatial_stroop/input/fmri_data/nii/"
+root_dir = "/Volumes/research/backup/project9_fmri_spatial_stroop/data/input/fmri_data/nii"
 sub_num = 41
 session_num = 6
 

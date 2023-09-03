@@ -2,15 +2,15 @@ clear, clc
 global defaults; spm_get_defaults;
 %spm('Defaults','FMRI');
 
-homefolder = '/Volumes/Research/project9_fmri_spatial_stroop/data/input/fmri_data/new_nii';
+homefolder = '/Users/dddd1007/Downloads/new_nii';
 datapath        = [homefolder filesep];  % Root-directory
 paths           = {'Orig'; 'Normalised'; 'Smooth_8mm'};
 runs            = {'session1','session2','session3','session4','session5','session6'};
 structurals     = {'3D'};
 
 subject_folder = cell(1, 4); % 预分配内存
-for i = 1:4
-    subjects{i} = sprintf('sub%.2d', i + 12); % sprintf 创建一个格式化字符串。'%.2d' 意味着打印两位数，前面用0填充。
+for i = 1:2
+    subjects{i} = sprintf('sub%.2d', i + 34); % sprintf 创建一个格式化字符串。'%.2d' 意味着打印两位数，前面用0填充。
 end
 % subjects        = {'sub1'};
 

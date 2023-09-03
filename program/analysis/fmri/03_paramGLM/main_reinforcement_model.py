@@ -1,4 +1,5 @@
 # 配置基本环境
+# %%
 import xia_fmri_workflow
 from pathlib import Path
 import pandas as pd
@@ -346,3 +347,5 @@ level1conest = EstimateContrast(
     contrasts=contrast_list,
 )
 contrastResult = level1conest.run()
+
+# %%
