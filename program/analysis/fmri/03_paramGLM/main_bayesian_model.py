@@ -10,46 +10,52 @@ from joblib import Parallel, delayed
 from nipype.interfaces.spm import Level1Design, EstimateModel, EstimateContrast
 from nipype.algorithms.modelgen import SpecifySPMModel
 
-base_path = "/Users/dddd1007/Library/CloudStorage/Dropbox/Work/Research/project9_fmri_spatial_stroop/data/input"
+base_path = "/Volumes/Research/all_research_data/project9_fmri_spatial_stroop/data/input"
 # 读取被试数据
-all_data = pd.read_csv(os.path.join(base_path, "all_data_with_params.csv"))
+all_data = pd.read_excel(os.path.join(base_path, "all_data_with_params.xlsx"))
 
 # 被试基本信息
 session_num = 6
 
 # 数据位置
-root_dir = "/Volumes/research/backup/project9_fmri_spatial_stroop/data/input/fmri_data/nii"
-output_dir = "/Users/dddd1007/Library/CloudStorage/Dropbox/Work/Research/project9_fmri_spatial_stroop/data/output/fmri_fix/"
+root_dir = "/Volumes/Research/all_research_data/project9_fmri_spatial_stroop/data/input/fmri_data/nii"
+output_dir = "/Volumes/Research/all_research_data/project9_fmri_spatial_stroop/data/output/param_glm/fmri_add_kl"
 
 # %%
 # Set the basic params
-params_name = ["congruency_num", "bl_sr_v", "bl_sr_PE"]
+params_name = ["congruency_num", "bl_sr_original_kl", "bl_sr_pe"]
 # make the contrast matrix
 # fmt: off
-condition_names = ["run_1", "", "run_1xcongruency_num^1", "", "run_1xbl_sr_v^1", "",
-                   "run_1xbl_sr_PE^1", "", "run_error_1", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_2", "", "run_2xcongruency_num^1", "", "run_2xbl_sr_v^1", "",
-                   "run_2xbl_sr_PE^1", "", "run_error_2", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_3", "", "run_3xcongruency_num^1", "", "run_3xbl_sr_v^1", "",
-                   "run_3xbl_sr_PE^1", "", "run_error_3", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_4", "", "run_4xcongruency_num^1", "", "run_4xbl_sr_v^1", "",
-                   "run_4xbl_sr_PE^1", "", "run_error_4", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_5", "", "run_5xcongruency_num^1", "", "run_5xbl_sr_v^1", "",
-                   "run_5xbl_sr_PE^1", "", "run_error_5", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_6", "", "run_6xcongruency_num^1", "", "run_6xbl_sr_v^1", "",
-                   "run_6xbl_sr_PE^1", "", "run_error_6", "", "X", "Y", "Z", "x_r", "y_r", "z_r"]  # noqa: E501
-cont1 = ["-V", 'T', condition_names,   [0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+condition_names = ["run_1", "", "run_1xcongruency_num^1", "", "run_1xbl_sr_original_kl^1", "",
+                   "run_1xbl_sr_pe^1", "", "run_error_1", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_2", "", "run_2xcongruency_num^1", "", "run_2xbl_sr_original_kl^1", "",
+                   "run_2xbl_sr_pe^1", "", "run_error_2", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_3", "", "run_3xcongruency_num^1", "", "run_3xbl_sr_original_kl^1", "",
+                   "run_3xbl_sr_pe^1", "", "run_error_3", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_4", "", "run_4xcongruency_num^1", "", "run_4xbl_sr_original_kl^1", "",
+                   "run_4xbl_sr_pe^1", "", "run_error_4", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_5", "", "run_5xcongruency_num^1", "", "run_5xbl_sr_original_kl^1", "",
+                   "run_5xbl_sr_pe^1", "", "run_error_5", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_6", "", "run_6xcongruency_num^1", "", "run_6xbl_sr_original_kl^1", "",
+                   "run_6xbl_sr_pe^1", "", "run_error_6", "", "X", "Y", "Z", "x_r", "y_r", "z_r"]  # noqa: E501
+cont1 = ["V", 'T', condition_names,    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 cont2 = ["PE", 'T', condition_names,   [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+cont3 = ["PE_neg", 'T', condition_names,   [0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 # fmt: on
 contrast_list = [cont1, cont2]
 # batch analysis
@@ -58,6 +64,8 @@ inputs = sub_num_list[(sub_num_list != 41) & (sub_num_list > 10)]
 
 
 def bl_processInput(sub_num):
+    if not isinstance(sub_num, int):
+        sub_num = int(sub_num)
     try:
         estimate_result = xia_fmri_workflow.workflow_param_glm_1stlevel(
             root_dir,
@@ -84,7 +92,6 @@ results = Parallel(n_jobs=3)(
     delayed(bl_processInput)(sub_num) for sub_num in inputs
 )
 
-
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # %%
@@ -92,24 +99,24 @@ results = Parallel(n_jobs=3)(
 
 # Set the basic params
 # fmt: off
-params_name = ['congruency_num', 'bl_sr_v', 'bl_sr_PE']
+params_name = ['congruency_num', 'bl_sr_original_kl', 'bl_sr_pe']
 # make the contrast matrix
-condition_names = ["run_2", "", "run_2xcongruency_num^1", "", "run_2xbl_sr_v^1", "",
-                   "run_2xbl_sr_PE^1", "", "run_error_2", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501  
-                   "run_3", "", "run_3xcongruency_num^1", "", "run_3xbl_sr_v^1", "",
-                   "run_3xbl_sr_PE^1", "", "run_error_3", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_4", "", "run_4xcongruency_num^1", "", "run_4xbl_sr_v^1", "",
-                   "run_4xbl_sr_PE^1", "", "run_error_4", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_5", "", "run_5xcongruency_num^1", "", "run_5xbl_sr_v^1", "",
-                   "run_5xbl_sr_PE^1", "", "run_error_5", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
-                   "run_6", "", "run_6xcongruency_num^1", "", "run_6xbl_sr_v^1", "",
-                   "run_6xbl_sr_PE^1", "", "run_error_6", "", "X", "Y", "Z", "x_r", "y_r", "z_r"]  # noqa: E501
+condition_names = ["run_2", "", "run_2xcongruency_num^1", "", "run_2xbl_sr_original_kl^1", "",
+                   "run_2xbl_sr_pe^1", "", "run_error_2", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_3", "", "run_3xcongruency_num^1", "", "run_3xbl_sr_original_kl^1", "",
+                   "run_3xbl_sr_pe^1", "", "run_error_3", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_4", "", "run_4xcongruency_num^1", "", "run_4xbl_sr_original_kl^1", "",
+                   "run_4xbl_sr_pe^1", "", "run_error_4", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_5", "", "run_5xcongruency_num^1", "", "run_5xbl_sr_original_kl^1", "",
+                   "run_5xbl_sr_pe^1", "", "run_error_5", "", "X", "Y", "Z", "x_r", "y_r", "z_r",  # noqa: E501
+                   "run_6", "", "run_6xcongruency_num^1", "", "run_6xbl_sr_original_kl^1", "",
+                   "run_6xbl_sr_pe^1", "", "run_error_6", "", "X", "Y", "Z", "x_r", "y_r", "z_r"]  # noqa: E501
 cont1 = ["-V", 'T', condition_names,   [
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 cont2 = ["PE", 'T', condition_names,   [
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -223,7 +230,7 @@ def factor_condition_generator(
             durations=bunch_duration,
             regressor_names=["X", "Y", "Z", "x_r", "y_r", "z_r"],
             regressors=head_movement_regressor_generator(
-                realignment_para_file_list[i - 1]
+                realignment_para_file_list[int(i) - 1]
             ),
         )
         subject_info.append(tmp_Bunch)
@@ -278,7 +285,7 @@ def parametric_condition_generator(
             ],
             regressor_names=["X", "Y", "Z", "x_r", "y_r", "z_r"],
             regressors=head_movement_regressor_generator(
-                realignment_para_file_list[i - 2]
+                realignment_para_file_list[int(i) - 2]
             ),
         )
         subject_info.append(tmp_Bunch)
@@ -355,3 +362,5 @@ level1conest = EstimateContrast(
     contrasts=contrast_list,
 )
 contrastResult = level1conest.run()
+
+# %%

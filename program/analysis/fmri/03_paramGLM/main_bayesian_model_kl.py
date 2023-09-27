@@ -230,7 +230,7 @@ def factor_condition_generator(
             durations=bunch_duration,
             regressor_names=["X", "Y", "Z", "x_r", "y_r", "z_r"],
             regressors=head_movement_regressor_generator(
-                realignment_para_file_list[i - 1]
+                realignment_para_file_list[int(i) - 1]
             ),
         )
         subject_info.append(tmp_Bunch)
@@ -285,7 +285,7 @@ def parametric_condition_generator(
             ],
             regressor_names=["X", "Y", "Z", "x_r", "y_r", "z_r"],
             regressors=head_movement_regressor_generator(
-                realignment_para_file_list[i - 2]
+                realignment_para_file_list[int(i) - 2]
             ),
         )
         subject_info.append(tmp_Bunch)
@@ -308,10 +308,9 @@ def generate_spm_conditions(matfile):
     return condition_names, single_run_conditions
 
 
-output_dir = "/Users/dddd1007/Library/CloudStorage/Dropbox/Work/Research/project9_fmri_spatial_stroop/data/output/fmri/paramGLM/new_bl/1stLevel/sub41"
+output_dir = "/Volumes/Research/all_research_data/project9_fmri_spatial_stroop/data/output/param_glm/fmri_add_kl/1stLevel/sub41"
 Path(output_dir).mkdir(parents=True, exist_ok=True)
 os.chdir(output_dir)
-root_dir = "/Volumes/research/backup/project9_fmri_spatial_stroop/data/input/fmri_data/nii"
 sub_num = 41
 session_num = 6
 
